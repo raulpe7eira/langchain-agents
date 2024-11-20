@@ -18,7 +18,8 @@ def find_student_data(student):
   return student_data.iloc[:1].to_dict()
 
 class StudentExtractor(BaseModel):
-  student:str = Field("Nome do estudante informado, sempre em letras minúsculas. Exemplo: joão, carlos, joana, carla.")
+  student:str = Field("""Nome do estudante informado, sempre em letras minúsculas.
+                      Exemplo: joão, carlos, joana, carla.""")
 
 class StudentData(BaseTool):
   name="StudentData"
@@ -31,9 +32,11 @@ class StudentData(BaseTool):
     parser = JsonOutputParser(pydantic_object=StudentExtractor)
 
     template = PromptTemplate(
-      template="Você deve analisar a {input} e extrair o nome do usuário informado. Formato de saída: {output}",
+      template="""Você deve analisar a {input} e extrair o nome do usuário informado.
+      Formato de saída:
+      {output}""",
       input_variables=["input"],
-      partial_variables={"output": parser}
+      partial_variables={"output": parser.get_format_instructions()}
     )
 
     chain = template | llm | parser
