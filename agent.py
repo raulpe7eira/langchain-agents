@@ -2,7 +2,7 @@ import os
 
 from langchain import hub
 from langchain_openai import ChatOpenAI
-from langchain.agents import create_openai_tools_agent, Tool
+from langchain.agents import create_react_agent, Tool
 from student import AcademicProfileTool, StudentDataTool
 
 class AgentOpenAIFunctions:
@@ -22,5 +22,10 @@ class AgentOpenAIFunctions:
            description = academic_profile_tool.description)
     ]
 
-    prompt = hub.pull("hwchase17/openai-functions-agent")
-    self.agent = create_openai_tools_agent(llm, self.tools, prompt)
+    # OpenAI Functions
+    # prompt = hub.pull("hwchase17/openai-functions-agent")
+    # self.agent = create_openai_tools_agent(llm, self.tools, prompt)
+
+    # ReAct
+    prompt = hub.pull("hwchase17/react")
+    self.agent = create_react_agent(llm, self.tools, prompt)
