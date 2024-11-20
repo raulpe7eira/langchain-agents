@@ -11,6 +11,11 @@ question = "Crie um perfil acadêmico para a Ana!"
 question = "Compare o perfil acadêmico da Ana com o da Bianca!"
 question = "Tenho sentido Ana desanimada com cursos de matemática. Seria uma boa parear ela com a Bianca?"
 question = "Tenho sentido Ana desanimada com cursos de matemática. Seria uma boa parear ela com o Marcos?"
+question = "Quais os dados da USP?"
+question = "Quais os dados da uNiCAmP?"
+question = "Quais os dados da uNi CAmP?"
+question = "Quais os dados da uNicomP?"
+question = "Dentre USP e UFRJ, qual você recomenda para a acadêmica Ana?"
 
 agent_openai = AgentOpenAIFunctions()
 executor = AgentExecutor(agent=agent_openai.agent,

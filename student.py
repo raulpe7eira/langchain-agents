@@ -9,7 +9,7 @@ from langchain.prompts import PromptTemplate
 from langchain.tools import BaseTool
 from typing import List
 
-def find_student_data(student):
+def find_student_data(student:str):
   data = pd.read_csv("documentos/estudantes.csv")
   student_data = data[data["USUARIO"] == student]
 
@@ -19,11 +19,10 @@ def find_student_data(student):
   return student_data.iloc[:1].to_dict()
 
 class StudentExtractor(BaseModel):
-  student:str = Field("""Nome do estudante informado, sempre em letras minúsculas.
-                      Exemplo: joão, carlos, joana, carla.""")
+  student:str = Field("""Nome do estudante informado, sempre em letras minúsculas.""")
 
 class StudentDataTool(BaseTool):
-  name="StudentData"
+  name="StudentDataTool"
   description="""Esta ferramenta extrai o histórico e preferências de um estudante de acordo com seu histórico.
 Passe para essa ferramenta como argumento o nome do estudante."""
 
@@ -64,7 +63,7 @@ class StudentAcademicProfile(BaseModel):
   summary:str = Field("Resumo das principais características desse estudante de forma a torná-lo único e um ótimo potencial estudante para faculdades. Exemplo: só este estudante tem bla bla bla")
 
 class AcademicProfileTool(BaseTool):
-  name = "AcademicProfile"
+  name = "AcademicProfileTool"
   description = """Cria um perfil acadêmico de um estudante.
   Esta ferramenta requer como entrada todos os dados do estudante.
   Eu sou imcapaz de buscar os dados do estudante.
