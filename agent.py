@@ -2,21 +2,24 @@ import os
 
 from langchain import hub
 from langchain_openai import ChatOpenAI
-from langchain.agents import create_openai_tools_agent
-from langchain.agents import Tool
-from student import StudentData
+from langchain.agents import create_openai_tools_agent, Tool
+from student import AcademicProfileTool, StudentDataTool
 
 class AgentOpenAIFunctions:
   def __init__(self):
     llm = ChatOpenAI(model="gpt-3.5-turbo",
                      api_key=os.getenv("OPENAI_API_KEY"))
 
-    student_data = StudentData()
+    academic_profile_tool = AcademicProfileTool()
+    student_data_tool = StudentDataTool()
 
     self.tools = [
-      Tool(name = student_data.name,
-           func = student_data.run,
-           description = student_data.description)
+      Tool(name = student_data_tool.name,
+           func = student_data_tool.run,
+           description = student_data_tool.description),
+      Tool(name = academic_profile_tool.name,
+           func = academic_profile_tool.run,
+           description = academic_profile_tool.description)
     ]
 
     prompt = hub.pull("hwchase17/openai-functions-agent")
