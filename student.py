@@ -24,25 +24,27 @@ class StudentExtractor(BaseModel):
 
 class StudentDataTool(BaseTool):
   name="StudentData"
-  description="Esta ferramenta extrai o histórico e preferências de um estudante de acordo com seu histórico."
+  description="""Esta ferramenta extrai o histórico e preferências de um estudante de acordo com seu histórico.
+Passe para essa ferramenta como argumento o nome do estudante."""
 
   def _run(self, input: str) -> str:
-    llm = ChatOpenAI(model="gpt-3.5-turbo",
-                     api_key=os.getenv("OPENAI_API_KEY"))
+    # llm = ChatOpenAI(model="gpt-3.5-turbo",
+    #                  api_key=os.getenv("OPENAI_API_KEY"))
 
-    parser = JsonOutputParser(pydantic_object=StudentExtractor)
-    template = PromptTemplate(
-      template="""Você deve analisar a {input} e extrair o nome do usuário informado.
-      Formato de saída:
-      {output}""",
-      input_variables=["input"],
-      partial_variables={"output": parser.get_format_instructions()}
-    )
+    # parser = JsonOutputParser(pydantic_object=StudentExtractor)
+    # template = PromptTemplate(
+    #   template="""Você deve analisar a {input} e extrair o nome do usuário informado.
+    #   Formato de saída:
+    #   {output}""",
+    #   input_variables=["input"],
+    #   partial_variables={"output": parser.get_format_instructions()}
+    # )
 
-    chain = template | llm | parser
-    response = chain.invoke({"input": input})
+    # chain = template | llm | parser
+    # response = chain.invoke({"input": input})
 
-    student = response["student"]
+    # student = response["student"]
+    student = input
     student = student.lower()
     student_data = find_student_data(student)
 
@@ -61,7 +63,9 @@ class StudentAcademicProfile(BaseModel):
 class AcademicProfileTool(BaseTool):
   name = "AcademicProfile"
   description = """Cria um perfil acadêmico de um estudante.
-  Esta ferramenta requer como entrada todos os dados do estudante."""
+  Esta ferramenta requer como entrada todos os dados do estudante.
+  Eu sou imcapaz de buscar os dados do estudante.
+  Você tem que buscar os dados do estudante antes de me invocar."""
 
   def _run(self, input:str) -> str:
     llm = ChatOpenAI(model="gpt-3.5-turbo",
