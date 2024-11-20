@@ -31,7 +31,7 @@ class UniversityDataTool(BaseTool):
   Passe para essa ferramenta como argumento o nome da universidade."""
 
   def _run(self, input:str) -> str:
-    llm = ChatOpenAI(model="gpt-3.5-turbo",
+    llm = ChatOpenAI(model="gpt-4o",
                      api_key=os.getenv("OPENAI_API_KEY"))
 
     parser = JsonOutputParser(pydantic_object=UniversityExtractor)

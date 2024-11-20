@@ -2,13 +2,13 @@ import os
 
 from langchain import hub
 from langchain_openai import ChatOpenAI
-from langchain.agents import create_react_agent, Tool
+from langchain.agents import create_openai_tools_agent, create_react_agent, Tool
 from student import AcademicProfileTool, StudentDataTool
 from university import AllUniversitiesTool, UniversityDataTool
 
 class AgentOpenAIFunctions:
   def __init__(self):
-    llm = ChatOpenAI(model="gpt-3.5-turbo",
+    llm = ChatOpenAI(model="gpt-4o",
                      api_key=os.getenv("OPENAI_API_KEY"))
 
     student_data_tool = StudentDataTool()
